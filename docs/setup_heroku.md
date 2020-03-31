@@ -13,7 +13,12 @@ sudo snap install --classic heroku
 heroku login
 ````
 
-## Setup new app
+## Install apache recipe
+````
+composer require symfony/apache-pack
+````
+
+## Setup new heroku app
 ````
 heroku login
 heroku create buyer-one --region=eu
@@ -25,7 +30,11 @@ heroku config:set APP_ENV=prod
 web: $(composer config bin-dir)/heroku-php-apache2 public/
 ````
 
-# Push
+# Update monolog config
+````
+````
+
+# Push (assumed new "heroku" branch)
 ````
 git push heroku heroku:master
 ````
