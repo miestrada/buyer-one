@@ -44,3 +44,10 @@ git push heroku heroku:master
 heroku buildpacks:add --index 2 heroku/nodejs
 Edit package.json copy scripts/build and rename it to heroku-postbuild
 ````
+
+## Create database
+```` 
+heroku addons:create cleardb:ignite
+heroku config | grep CLEARDB_DATABASE_URL
+heroku config:set DATABASE_URL=...
+````

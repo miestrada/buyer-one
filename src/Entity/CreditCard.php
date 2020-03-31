@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CreditCard extends PaymentMethod implements PaymentMethodInterface
 {
-    protected string $type = 'CreditCard';
+    protected $type = 'CreditCard';
 
     /**
      * @ORM\Id()
@@ -20,7 +20,7 @@ class CreditCard extends PaymentMethod implements PaymentMethodInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190)
      * @Assert\NotBlank(
      *     message="Should not be blank",
      * )

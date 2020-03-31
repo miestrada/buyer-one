@@ -20,12 +20,12 @@ class Product
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=190, nullable=true)
      */
     private $description;
 
@@ -46,7 +46,7 @@ class Product
     private $campaigns;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=190, nullable=true)
      */
     private $image;
 
