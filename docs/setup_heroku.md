@@ -13,3 +13,10 @@ sudo snap install --classic heroku
 heroku login
 ````
 
+## Setup new app
+````
+heroku login
+heroku create buyer-one --region=eu
+heroku config:set APP_ENV=prod
+
+````
