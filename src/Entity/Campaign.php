@@ -25,7 +25,7 @@ class Campaign
     private $uuid;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=190)
      */
     private $name;
 
