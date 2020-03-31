@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <a class="btn btn-primary float-right" href="{{ path('admin/product/new') }}">Add new product</a>
+            <h1 class="display-4">{{ products|length }} products</h1>
+            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Campaigns</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <th scope="row">{{ product.id }}</th>
+                    <td>
+                        <a href="{{ path('admin/product/edit', {id: product.id}) }}">{{ product.name }}</a>
+                        <div class="text-secondary">{{ product.description|u.truncate(96, '...') }}</div>
+                    </td>
+                    <td>{{ product.price|number_format(2) }}</td>
+                    <td><a href="{{ path('admin/product/campaigns/index', {product_id: product.id}) }}">{{ product.campaigns|length }} campaigns</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+        </button>
+    </div>
+{% endblock %}

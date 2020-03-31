@@ -1,0 +1,66 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <a class="btn btn-primary float-right" href="{{ path('admin/product/campaign/new', {product_id: product.id}) }}">Add new campaign</a>
+            <h1 class="display-4">{{ product.name }}</h1>
+            <p class="lead">{{ campaigns|length }} campaigns</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Reads</th>
+                <th scope="col">Sales</th>
+                <th scope="col">QR</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for campaign in campaigns %}
+                <tr>
+                    <th scope="row">{{ campaign.id }}</th>
+                    <td>
+                        <a href="{{ path('admin/product/campaign/edit', {product_id: product.id, campaign_id: campaign.id}) }}">{{ campaign.name }}</a>
+                    </td>
+                    <td>#</td>
+                    <td>#</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#qr_modal"
+                                data-image="{{ path('web/qr', {campaign_uuid: campaign.uuid, size: 300}) }}">
+                            <img src="{{ path('web/qr', {campaign_uuid: campaign.uuid, size: 40}) }}" width=""/>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Modal -->
+        <div class="modal fade" id="qr_modal" tabindex="-1" role="dialog" aria-labelledby="qr_modal_label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="qr_modal_label">QR Code</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        {#<button type="button" class="btn btn-primary">Save changes</button>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
