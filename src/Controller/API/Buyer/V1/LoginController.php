@@ -51,7 +51,7 @@ class LoginController extends APIController
                 ->setRoles(['ROLE_USER']);
         }
 
-        $buyer->setCode(1111);
+        $buyer->setCode('1111');
 
         $violations = $this->validator->validate($buyer);
         if ($violations->count())

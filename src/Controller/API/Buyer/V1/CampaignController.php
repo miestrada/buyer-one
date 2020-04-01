@@ -30,7 +30,7 @@ class CampaignController extends APIController
      */
     function getCampaign(Request $request)
     {
-        $campaignUuid = (int)$request->get('uuid');
+        $campaignUuid = $request->get('uuid');
 
         /** @var Campaign $campaign */
         $campaign = $this->entityManager->getRepository(Campaign::class)->findOneBy([
@@ -40,29 +40,7 @@ class CampaignController extends APIController
         if (!$campaign)
             return $this->notFound(Campaign::class, ['uuid' => $campaignUuid]);
 
-        /** @var Product $product */
-        $product = $campaign->getProduct();
-
-        /** @var User $user */
-        $user = $product->getUser();
-
-        return $this->json([
-            'id' => $campaign->getId(),
-            'uuid' => $campaign->getUuid(),
-            'name' => $campaign->getName(),
-            'product' => [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'description' => $product->getDescription(),
-                'price' => $product->getPrice(),
-                'images' => [
-                    $product->getImage(),
-                ],
-                'seller' => [
-                    'name' => $user->getName(),
-                ]
-            ],
-        ]);
+        return $this->json($campaign->cast());
     }
 
 }

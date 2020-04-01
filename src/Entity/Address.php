@@ -54,7 +54,7 @@ class Address
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=190)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(
      *     message="Should not be blank",
      * )
@@ -66,7 +66,7 @@ class Address
     private $line1;
 
     /**
-     * @ORM\Column(type="string", length=190, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(
      *     max=120,
      *     maxMessage="Maximum length of {{ limit }} required",
@@ -75,7 +75,7 @@ class Address
     private $line2;
 
     /**
-     * @ORM\Column(type="string", length=190)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(
      *     message="Should not be blank",
      * )
@@ -83,12 +83,12 @@ class Address
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=190, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $state;
 
     /**
-     * @ORM\Column(type="string", length=190, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $notes;
 

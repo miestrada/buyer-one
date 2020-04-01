@@ -20,7 +20,7 @@ class CreditCard extends PaymentMethod implements PaymentMethodInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=190)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(
      *     message="Should not be blank",
      * )

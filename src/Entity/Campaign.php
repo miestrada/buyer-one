@@ -25,7 +25,7 @@ class Campaign
     private $uuid;
 
     /**
-     * @ORM\Column(type="string", length=190)
+     * @ORM\Column(type="string", length=255)
      */
     private $name;
 
@@ -89,6 +89,27 @@ class Campaign
         $this->master = $master;
 
         return $this;
+    }
+
+    public function cast()
+    {
+        return [
+            'id' => $this->getId(),
+            'uuid' => $this->getUuid(),
+            'name' => $this->getName(),
+            'product' => [
+                'id' => $this->getProduct()->getId(),
+                'name' => $this->getProduct()->getName(),
+                'description' => $this->getProduct()->getDescription(),
+                'price' => $this->getProduct()->getPrice(),
+                'images' => [
+                    $this->getProduct()->getImage(),
+                ],
+                'seller' => [
+                    'name' => $this->getProduct()->getUser()->getName(),
+                ]
+            ],
+        ];
     }
 
 }

@@ -39,12 +39,12 @@ class Buyer implements UserInterface
     private string $phone;
 
     /**
-     * @ORM\Column(type="string", length=190, unique=true, nullable=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
     private ?string $email;
 
     /**
-     * @ORM\Column(type="string", length=190, unique=true, nullable=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
     private ?string $password;
 
@@ -59,9 +59,9 @@ class Buyer implements UserInterface
     private ?string $token;
 
     /**
-     * @ORM\Column(type="integer", length=4, nullable=true)
+     * @ORM\Column(type="string", length=4, nullable=true)
      */
-    private ?int $code;
+    private ?string $code;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Address", mappedBy="buyer")
@@ -166,12 +166,12 @@ class Buyer implements UserInterface
         return $this;
     }
 
-    public function getCode(): ?int
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
-    public function setCode(int $code): self
+    public function setCode(string $code): self
     {
         $this->code = $code;
 

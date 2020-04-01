@@ -32,9 +32,11 @@
         "symfony/web-link": "5.0.*",
         "symfony/webpack-encore-bundle": "^1.7",
         "symfony/yaml": "5.0.*",
-        "twig/string-extra": "^3.0"
+        "twig/string-extra": "^3.0",
+      "ext-json": "*"
     },
     "require-dev": {
+        "symfony/browser-kit": "5.0.*",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/phpunit-bridge": "^5.0",

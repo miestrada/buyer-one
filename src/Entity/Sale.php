@@ -32,6 +32,7 @@ class Sale
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PaymentMethod", inversedBy="sales")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $paymentMethod;
 
@@ -42,6 +43,7 @@ class Sale
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Item", mappedBy="sale", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $items;
 
@@ -94,8 +96,15 @@ class Sale
 
     public function cast()
     {
+        $items = [];
+        foreach ($this->getItems() as $item)
+            $items[] = $item->cast();
+
         return [
             'id' => $this->getId(),
+            'address' => $this->getAddress()->cast(),
+            'payment_method' => $this->getPaymentMethod()->cast(),
+            'items' => $items,
         ];
     }
 

@@ -36,7 +36,7 @@ class SaleController extends APIController
     {
         $saleId = (int)$request->get('id', 0);
 
-        /** @var Address $address */
+        /** @var Sale $sale */
         $sale = $this->entityManager->getRepository(Sale::class)->findOneBy([
             'id' => $saleId,
             'buyer' => $this->getUser(),
@@ -62,6 +62,7 @@ class SaleController extends APIController
         $paymentMethodId = $request->get('payment_method_id', 0);
 
         // Campaign
+        /** @var Campaign $campaign */
         $campaign = $this->entityManager->getRepository(Campaign::class)->findOneBy([
             'uuid' => $campaignUuid,
         ]);
@@ -80,7 +81,7 @@ class SaleController extends APIController
         if ($violations->count())
             return $this->notAcceptable($violations);
 
-        // Address
+        /** @var Address $address */
         $address = $this->entityManager->getRepository(Address::class)->findOneBy([
             'id' => $addressId,
             'buyer' => $this->getUser(),
@@ -89,7 +90,7 @@ class SaleController extends APIController
         if (!$address)
             return $this->notFound(Address::class, ['id' => $addressId]);
 
-        //  PaymentMethod
+        /** @var PaymentMethod $paymentMethod */
         $paymentMethod = $this->entityManager->getRepository(PaymentMethod::class)->findOneBy([
             'id' => $paymentMethodId,
             'buyer' => $this->getUser(),
@@ -119,39 +120,4 @@ class SaleController extends APIController
         );
     }
 
-    /**
-     * @Route("/credit_card", methods={"PUT"})
-     * @param Request $request
-     * @return JsonResponse
-     */
-    function putCreditCard(Request $request)
-    {
-        $creditCardId = (int)$request->get('id', 0);
-
-        /** @var CreditCard $creditCard */
-        $creditCard = $this->entityManager->getRepository(CreditCard::class)->findOneBy([
-            'id' => $creditCardId,
-            'buyer' => $this->getUser(),
-        ]);
-
-        if (!$creditCard)
-            return $this->notFound(CreditCard::class, ['id' => $creditCardId]);
-
-        $creditCard
-            ->setName($request->get('name', ""))
-            ->setNumber($request->get('number', ""))
-            ->setExpires($request->get('expires', ""))
-            ->setCvv($request->get('cvv', ""));
-
-        $violations = $this->validator->validate($creditCard);
-        if ($violations->count())
-            return $this->notAcceptable($violations);
-
-        $this->entityManager->persist($creditCard);
-        $this->entityManager->flush();
-
-        return $this->json(
-            $creditCard->cast()
-        );
-    }
 }

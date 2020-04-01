@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemRepository")
@@ -34,6 +35,10 @@ class Item
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThan(
+     *     value=0,
+     *     message="Should be greater than 0"
+     * )
      */
     private $quantity;
 
@@ -90,4 +95,12 @@ class Item
         return $this;
     }
 
+    public function cast(): array
+    {
+        return [
+            'campaign' => $this->getCampaign()->cast(),
+            'price' => $this->getPrice(),
+            'quantity' => $this->getQuantity(),
+        ];
+    }
 }
