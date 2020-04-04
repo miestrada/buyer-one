@@ -2,7 +2,9 @@
 
 namespace App\Security;
 
+use App\Controller\APIController;
 use App\Entity\Buyer;
+use App\Entity\Campaign;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,10 +79,24 @@ class BuyerAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        $data = [
-            'status' => Response::HTTP_FORBIDDEN,
-            'data' => strtr($exception->getMessageKey(), $exception->getMessageData())
+        try {
+            $class = (new \ReflectionClass(self::class))->getShortName();
+        } catch (\ReflectionException $e) {
+            $class = '?';
+        }
 
+        $data = [
+            'response' => '',
+            'status' => Response::HTTP_FORBIDDEN,
+            'errors' =>
+                [
+                    [
+                        'type' => 'auth',
+                        'name' => $class,
+                        'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
+                        'details' => [],
+                    ],
+                ],
             // or to translate this message
             // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
         ];
@@ -90,12 +106,30 @@ class BuyerAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * Called when authentication is needed, but it's not sent
+     * @param Request $request
+     * @param AuthenticationException|null $authException
+     * @return JsonResponse
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
+        try {
+            $class = (new \ReflectionClass(self::class))->getShortName();
+        } catch (\ReflectionException $e) {
+            $class = '?';
+        }
+
         $data = [
+            'response' => 0,
             'status' => Response::HTTP_UNAUTHORIZED,
-            'message' => 'Authentication required'
+            'errors' =>
+                [
+                    [
+                        'type' => 'auth',
+                        'name' => $class,
+                        'message' => 'Authentication required',
+                        'details' => [],
+                    ],
+                ],
         ];
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);

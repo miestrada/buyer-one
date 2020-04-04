@@ -20,8 +20,6 @@ class CampaignTest extends APIWebTestCase
         /** @var Campaign $campaign */
         $campaign = end($campaigns);
 
-        echo $campaign->getUuid();
-
         $this->getTestClient()->request('GET', self::API_URL . '/campaign', [
             'uuid' => $campaign->getUuid(),
         ], [], ['HTTP_X-AUTH-TOKEN' => $this->getSampleBuyer()->getToken()]);

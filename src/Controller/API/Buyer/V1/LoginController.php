@@ -32,11 +32,11 @@ class LoginController extends APIController
     }
 
     /**
-     * @Route("/login", methods={"POST"})
+     * @Route("/code", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
-    function postLogin(Request $request)
+    function postCode(Request $request)
     {
         $phone = trim($request->get('phone'));
 
@@ -62,17 +62,18 @@ class LoginController extends APIController
 
         return $this->json([
             'phone' => $buyer->getPhone(),
-            'code' => $buyer->getCode(),
+            'type' => 'sms',
+            //'code' => $buyer->getCode(),
             'is_new' => $isNew,
         ]);
     }
 
     /**
-     * @Route("/token", methods={"POST"})
+     * @Route("/login", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
-    function postToken(Request $request)
+    function postLogin(Request $request)
     {
         $phone = trim($request->get('phone'));
         $code = trim($request->get('code'));
@@ -99,4 +100,18 @@ class LoginController extends APIController
             'token' => $buyer->getToken(),
         ]);
     }
+
+    /**
+     * @Route("/validate", methods={"GET"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    function getValidate(Request $request)
+    {
+        return $this->json([
+            'phone' => $this->getUser()->getPhone(),
+            'is_valid' => true,
+        ]);
+    }
+
 }
