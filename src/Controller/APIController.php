@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class APIController extends AbstractController
+class APIController extends AbstractController implements APIJsonRequestInterface
 {
 
     /** @var EntityManagerInterface $entityManager */

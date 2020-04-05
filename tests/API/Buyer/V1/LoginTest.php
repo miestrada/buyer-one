@@ -31,12 +31,42 @@ class LoginTest extends APIWebTestCase
         $this->assertSame('sms', $content->data->type);
     }
 
+    public function testPostCodeJson()
+    {
+        $this->getTestClient()->request('POST', self::API_URL . '/code', [], [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'phone' => $this->getSamplePhone()
+            ])
+        );
+
+        $content = json_decode($this->getTestClient()->getResponse()->getContent());
+
+        $this->assertSame($this->getSamplePhone(), $content->data->phone);
+        $this->assertSame('sms', $content->data->type);
+    }
+
     public function testPostLogin()
     {
         $this->getTestClient()->request('POST', self::API_URL . '/login', [
             'phone' => $this->getSamplePhone(),
             'code' => $this->getSampleCode(),
         ]);
+
+        $content = json_decode($this->getTestClient()->getResponse()->getContent());
+
+        $this->assertSame($this->getSampleBuyer()->getToken(), $content->data->token);
+    }
+
+    public function testPostLoginJson()
+    {
+        $this->getTestClient()->request('POST', self::API_URL . '/login', [], [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
+                'phone' => $this->getSamplePhone(),
+                'code' => $this->getSampleCode(),
+            ])
+        );
 
         $content = json_decode($this->getTestClient()->getResponse()->getContent());
 
